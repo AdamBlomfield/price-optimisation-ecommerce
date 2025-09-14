@@ -17,10 +17,15 @@ Usage:
 """
 import argparse
 import logging
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+# Add project root to Python path to import config
+project_root = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(project_root))
 
 # Import project-specific configuration
 import config
