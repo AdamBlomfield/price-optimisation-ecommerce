@@ -27,22 +27,27 @@ import pandas as pd
 project_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(project_root))
 
-# Import project-specific configuration
+# Import project-specific configuration and utilities
 import config
+from src.utils.logging import setup_logging
 
 
-def generate_synthetic_data(params: dict) -> pd.DataFrame:
+def generate_synthetic_data(params: dict, logger: logging.Logger = None) -> pd.DataFrame:
     """
     Core function to generate the synthetic dataset based on configuration.
 
     Args:
         params: A dictionary containing data generation parameters from the
                 config file.
+        logger: Optional logger instance. If None, uses the default logging module.
 
     Returns:
         A pandas DataFrame with the generated synthetic data.
     """
-    logging.info("Starting synthetic data generation...")
+    if logger is None:
+        logger = logging.getLogger(__name__)
+    
+    logger.info("Starting synthetic data generation...")
     np.random.seed(42)  # for reproducibility
 
     # Unpack parameters from the config dictionary
@@ -53,7 +58,7 @@ def generate_synthetic_data(params: dict) -> pd.DataFrame:
     # Generate date range and product SKUs
     dates = pd.to_datetime(pd.date_range(start=start_date, end=end_date))
     product_ids = [f"SKU-{i}" for i in range(n_products)]
-    logging.info(f"Generating data for {n_products} products from {start_date} to {end_date}.")
+    logger.info(f"Generating data for {n_products} products from {start_date} to {end_date}.")
 
     # Assign stable characteristics to each product
     product_characteristics = {
@@ -127,7 +132,7 @@ def generate_synthetic_data(params: dict) -> pd.DataFrame:
     df["price"] = df["price"].clip(lower=0.01).round(2)
     df["marketing_spend"] = df["marketing_spend"].round(2)
 
-    logging.info("Data generation complete. Finalising DataFrame.")
+    logger.info("Data generation complete. Finalising DataFrame.")
 
     # Select and reorder final columns
     final_cols = [
@@ -145,8 +150,8 @@ def main() -> None:
     """
     Main function to run the data generation pipeline.
     """
-    # Setup basic logging
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+    # Setup logging
+    logger = setup_logging()
 
     # Setup command-line argument parsing
     parser = argparse.ArgumentParser(description="Generate synthetic e-commerce data.")
@@ -159,13 +164,13 @@ def main() -> None:
     args = parser.parse_args()
 
     # Generate the data
-    synthetic_df = generate_synthetic_data(config.DATA_GENERATION)
+    synthetic_df = generate_synthetic_data(config.DATA_GENERATION, logger)
 
     # Save the data to the specified location
     output_path = Path(args.output_dir) / config.DATA_GENERATION["output_filename"]
     output_path.parent.mkdir(parents=True, exist_ok=True)
     synthetic_df.to_csv(output_path, index=False)
-    logging.info(f"Successfully saved synthetic data to {output_path}")
+    logger.info(f"Successfully saved synthetic data to {output_path}")
 
 
 if __name__ == "__main__":
