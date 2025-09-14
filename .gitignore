@@ -1,0 +1,63 @@
+# This file tells Git which files and directories to ignore.
+# For a comprehensive list, see https://github.com/github/gitignore
+
+# Environment & Dependencies
+# -----------------------------------------------------------------------------
+# Ignore virtual environment folders created by venv or conda.
+# These should be recreated from environment.yml or requirements.txt.
+.venv/
+price-optimisation-env/
+.env
+
+# Data Files
+# -----------------------------------------------------------------------------
+# Ignore the data directories. Data is not code and should not be versioned.
+# The directory structure is preserved via .gitkeep files.
+data/01_raw/*
+data/02_interim/*
+data/03_processed/*
+# Use !.gitkeep to ensure empty directories are still tracked.
+!data/01_raw/.gitkeep
+!data/02_interim/.gitkeep
+!data/03_processed/.gitkeep
+
+# Models
+# -----------------------------------------------------------------------------
+# Ignore trained models. These are artifacts of the training scripts.
+models/*
+!models/.gitkeep
+
+# Reports & Figures
+# -----------------------------------------------------------------------------
+# Ignore generated reports and figures.
+reports/figures/*
+!reports/figures/.gitkeep
+
+# Jupyter Notebooks
+# -----------------------------------------------------------------------------
+# Ignore the notebook checkpoint files.
+.ipynb_checkpoints/
+
+# Python
+# -----------------------------------------------------------------------------
+# Ignore Python bytecode and cache folders.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE & Editor specific files
+# -----------------------------------------------------------------------------
+.vscode/
+.idea/
+
+# OS-specific files
+# -----------------------------------------------------------------------------
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+
+# Log files
+# -----------------------------------------------------------------------------
+*.log
