@@ -23,6 +23,7 @@ PROCESSED_DATA_DIR = DATA_DIR / "03_processed"
 MODELS_DIR = PROJECT_DIR / "models"
 REPORTS_DIR = PROJECT_DIR / "reports"
 FIGURES_DIR = REPORTS_DIR / "figures"
+LOGS_DIR = PROJECT_DIR / "logs"
 
 # Ensure all necessary directories exist
 RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -30,6 +31,20 @@ INTERIM_DATA_DIR.mkdir(parents=True, exist_ok=True)
 PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
+
+# --- LOGGING CONFIGURATION ---
+
+# Logging settings for the project
+LOGGING = {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "date_format": "%Y-%m-%d %H:%M:%S",
+    "log_file": LOGS_DIR / "price_optimisation.log",
+    "max_file_size": 10 * 1024 * 1024,  # 10 MB
+    "backup_count": 5,  # Keep 5 backup files
+}
 
 
 # --- DATA GENERATION PARAMETERS ---
