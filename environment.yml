@@ -17,6 +17,8 @@ dependencies:
 
   # Visualisation and Dashboard
   - plotly
+  - matplotlib
+  - seaborn
   - dash
   - dash-bootstrap-components
 
