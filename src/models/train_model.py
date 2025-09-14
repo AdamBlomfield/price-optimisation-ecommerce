@@ -24,31 +24,36 @@ from pygam import LinearGAM, s
 project_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(project_root))
 
-# Import project-specific configuration
+# Import project-specific configuration and utilities
 import config
+from src.utils.logging import setup_logging
 
 
-def train_model(df: pd.DataFrame, params: dict) -> LinearGAM:
+def train_model(df: pd.DataFrame, params: dict, logger: logging.Logger = None) -> LinearGAM:
     """
     Defines and trains the Generalised Additive Model.
 
     Args:
         df: The processed input DataFrame containing features and the target.
         params: A dictionary of model training parameters from the config.
+        logger: Optional logger instance. If None, uses the default logging module.
 
     Returns:
         The trained LinearGAM model object.
     """
-    logging.info("Starting model training...")
+    if logger is None:
+        logger = logging.getLogger(__name__)
+    
+    logger.info("Starting model training...")
 
     # 1. Define features (X) and target (y)
     try:
         X = df[params["feature_columns"]]
         y = df[params["target_column"]]
-        logging.info(f"Features used for training: {X.columns.tolist()}")
-        logging.info(f"Target variable: {params['target_column']}")
+        logger.info(f"Features used for training: {X.columns.tolist()}")
+        logger.info(f"Target variable: {params['target_column']}")
     except KeyError as e:
-        logging.error(f"Column not found in DataFrame: {e}")
+        logger.error(f"Column not found in DataFrame: {e}")
         raise
 
     # 2. Build the GAM model structure
@@ -66,9 +71,9 @@ def train_model(df: pd.DataFrame, params: dict) -> LinearGAM:
     # if it's not wrapped in a term like `s()` or `f()`.
     model = LinearGAM(gam_structure)
 
-    logging.info("Fitting the GAM model...")
+    logger.info("Fitting the GAM model...")
     model.fit(X, y)
-    logging.info("Model training completed successfully.")
+    logger.info("Model training completed successfully.")
 
     return model
 
@@ -77,10 +82,8 @@ def main() -> None:
     """
     Main function to run the model training pipeline.
     """
-    # Setup basic logging
-    logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
+    # Setup logging
+    logger = setup_logging()
 
     # Setup command-line argument parsing
     parser = argparse.ArgumentParser(description="Train the price elasticity model.")
@@ -100,15 +103,15 @@ def main() -> None:
     args = parser.parse_args()
 
     # Load the processed data
-    logging.info(f"Loading data from {args.input_path}...")
+    logger.info(f"Loading data from {args.input_path}...")
     try:
         input_df = pd.read_csv(args.input_path)
     except FileNotFoundError:
-        logging.error(f"Data file not found at {args.input_path}. Please run 'make data' first.")
+        logger.error(f"Data file not found at {args.input_path}. Please run 'make data' first.")
         return
 
     # Train the model
-    trained_model = train_model(input_df, config.MODEL_TRAINING)
+    trained_model = train_model(input_df, config.MODEL_TRAINING, logger)
 
     # Save the trained model using joblib for efficiency
     output_path = (
@@ -116,7 +119,7 @@ def main() -> None:
     )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(trained_model, output_path)
-    logging.info(f"Successfully saved trained model to {output_path}")
+    logger.info(f"Successfully saved trained model to {output_path}")
 
 
 if __name__ == "__main__":
