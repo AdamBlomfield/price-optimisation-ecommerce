@@ -1,0 +1,33 @@
+name: price-optimisation-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # Core Python version
+  - python=3.12
+
+  # Core data science libraries
+  - pandas
+  - numpy
+  - scikit-learn
+
+  # Modelling
+  # Generalised Additive Models library
+  - pygam
+
+  # Visualisation and Dashboard
+  - plotly
+  - dash
+  - dash-bootstrap-components
+
+  # Development Environment
+  - jupyterlab
+
+  # Testing
+  - pytest
+
+  # Web Server for Deployment
+  - gunicorn
+
+  # Pip, included to manage any packages not on conda channels
+  - pip
