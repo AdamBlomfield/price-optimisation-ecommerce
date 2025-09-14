@@ -1,10 +1,11 @@
-# E-commerce Price Optimization for Revenue Maximization
+
+# E-commerce Price Optimisation for Revenue Maximisation
 
 ## Overview
 
 **This project demonstrates an end-to-end data science workflow to solve a critical business problem for a fictional e-commerce retailer, "Fashionista." The core objective is to move beyond a static, cost-plus pricing model to a dynamic, data-driven strategy.**
 
-**By modeling the price elasticity of demand using a Generalized Additive Model (GAM), this project identifies optimal price points to maximize revenue. The final output is a fully interactive Plotly Dash dashboard that empowers business users to conduct "what-if" scenario analysis and make informed pricing decisions.**
+**By modelling the price elasticity of demand using a Generalized Additive Model (GAM), this project identifies optimal price points to maximise revenue. The final output is a fully interactive Plotly Dash dashboard that empowers business users to conduct "what-if" scenario analysis and make informed pricing decisions.**
 
 ### 🚀 Live Dashboard & Demo
 
@@ -30,20 +31,20 @@ The goal is to develop a tool that addresses these issues and provides a clear p
 **This project tackles the problem by architecting a robust, reproducible data science solution.**
 
 1. **High-Fidelity Synthetic Data:** To overcome the limitations of real-world transactional data (which often lacks price variation), a synthetic dataset was generated. This creates a controlled environment where the "ground truth" price elasticity is known, allowing for rigorous model validation.
-2. **Interpretable Modeling with GAMs:** A simple linear regression would fail to capture the complex, non-linear effects of seasonality and marketing, leading to a biased estimate of price elasticity. Conversely, a "black-box" model like a Gradient Boosting Machine would be uninterpretable to business users. **Generalized Additive Models (GAMs)** were chosen as the ideal solution, as they:
-   * **Provide a direct, interpretable coefficient for price elasticity (by modeling price as a linear term).**
+2. **Interpretable Modelling with GAMs:** A simple linear regression would fail to capture the complex, non-linear effects of seasonality and marketing, leading to a biased estimate of price elasticity. Conversely, a "black-box" model like a Gradient Boosting Machine would be uninterpretable to business users. **Generalised Additive Models (GAMs)** were chosen as the ideal solution, as they:
+   * **Provide a direct, interpretable coefficient for price elasticity (by modelling price as a linear term).**
    * **Flexibly capture complex, non-linear relationships of confounding variables (like seasonality and marketing spend) using smooth splines.**
 3. **Interactive Decision-Support Dashboard:** The final model is deployed into an interactive Plotly Dash application. This tool is not a black box; it's a decision-support system that allows category managers to explore the trade-offs between price, sales volume, and total revenue.
 
 ## Key Features
 
-* **Revenue Optimization Curve:** The core visualization that plots Predicted Revenue against Price, making the optimal price point intuitive and easy to identify.
+* **Revenue Optimisation Curve:** The core visualisation that plots Predicted Revenue against Price, making the optimal price point intuitive and easy to identify.
 * **Interactive "What-If" Analysis:** A price slider allows users to instantly see the predicted impact of any price change on sales and revenue.
 * **Scenario Comparison Table:** A clear table that compares the "Current Strategy," the user's "Selected Strategy," and the model's "Optimal Strategy," quantifying the potential revenue lift of each decision.
 
 ## Tech Stack
 
-* **Backend & Modeling:** Python, Pandas, NumPy, Scikit-learn, PyGAM
+* **Backend & Modelling:** Python, Pandas, NumPy, Scikit-learn, PyGAM
 * **Dashboard:** Plotly Dash, Dash Bootstrap Components
 * **Project Management:** Makefile, Cookiecutter Data Science structure
 * **Testing:** Pytest
@@ -51,18 +52,18 @@ The goal is to develop a tool that addresses these issues and provides a clear p
 
 ## Project Structure
 
-**This repository follows the Cookiecutter Data Science project structure to ensure the work is organized, reproducible, and scalable.**
+**This repository follows the Cookiecutter Data Science project structure to ensure the work is organised, reproducible, and scalable.**
 
 ```
 ├── README.md          <- The top-level README for developers using this project.
 ├── data
-│   ├── 01_raw           <- The original, immutable data dump.
-│   ├── 02_interim       <- Intermediate data that has been transformed.
-│   └── 03_processed     <- The final, canonical data sets for modeling.
-├── models             <- Trained and serialized models.
+│   ├── 01_raw           <- The original, immutable data dump.
+│   ├── 02_interim       <- Intermediate data that has been transformed.
+│   └── 03_processed     <- The final, canonical data sets for modelling.
+├── models             <- Trained and serialised models.
 ├── notebooks          <- Jupyter notebooks for exploration and analysis.
 ├── reports
-│   └── figures        <- Generated graphics and figures.
+│   └── figures        <- Generated graphics and figures.
 ├── src                <- Source code for use in this project.
 ├── tests              <- Unit tests for the source code.
 ├── app.py             <- Main script for the Plotly Dash dashboard.
@@ -80,23 +81,17 @@ The goal is to develop a tool that addresses these issues and provides a clear p
    ```
    git clone [https://github.com/AdamBlomfield/price-optimisation-ecommerce.git](https://github.com/AdamBlomfield/price-optimisation-ecommerce.git)
    cd price-optimisation-ecommerce
+
    ```
 2. **Create and activate the environment:**
 
-   * **Using Conda:**
-     ```
-     conda env create -f environment.yml
+   ```
+   conda env create -f environment.yml
+   conda activate price-optimisation-env
 
-     ```
-3. **Create and activate the environment:**
-
-   * **Using Conda:**
-     ```
-     conda env create -f environment.yml
-     conda activate price-optimization-env
-     ```
-4. **Run the data and modeling pipeline:**
-   The `<span class="selected">Makefile</span>` contains the commands to run the entire pipeline.
+   ```
+3. **Run the data and modelling pipeline:**
+   The `Makefile` contains the commands to run the entire pipeline.
 
    ```
    # This will run the data generation script and train the model
@@ -110,10 +105,10 @@ The goal is to develop a tool that addresses these issues and provides a clear p
    make train     # Trains the GAM model
 
    ```
-5. **Launch the Dashboard:**
+4. **Launch the Dashboard:**
 
    ```
    python app.py
 
    ```
-   The application will be available at `http://127.0.0.1:8050/`.
+   The application will be available at `http://127.0.0.1:8050/.`
